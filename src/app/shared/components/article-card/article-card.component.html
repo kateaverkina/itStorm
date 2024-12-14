@@ -1,0 +1,20 @@
+<div class="article-card" *ngIf="article" (click)="navigate()">
+  <div>
+    <div class="article-category">
+      {{article.category}}
+    </div>
+    <div class="article-image" style="background-image: url({{serverStaticPath + article.image}})"></div>
+    <div class="article-text">
+      <div class="article-title">{{article.title}}</div>
+      <div class="article-description">
+        {{article.description}}
+      </div>
+    </div>
+  </div>
+
+  <a [routerLink]="'/article/' + article.url" class="article-read">
+    Читать дальше
+  </a>
+</div>
+
+

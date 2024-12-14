@@ -1,0 +1,24 @@
+@import "../../../../assets/styles/variables";
+
+.blog-sorting-item {
+  cursor: pointer;
+  margin-bottom: 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .category-name {
+    font-size: 16px;
+    line-height: 20.8px;
+    color: #BEBEBE;
+    text-decoration: none;
+
+    &.active {
+      color: $main-text-color;
+    }
+  }
+
+  &.active {
+    color: $main-text-color;
+  }
+}
