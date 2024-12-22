@@ -7,19 +7,35 @@
           <input type="text" class="input"
                  [ngStyle]="{'border-color': signupForm.get('name')?.invalid
                  && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched) ? 'red' : ''}"
-                 placeholder="Ваше имя" formControlName="name">
+                 placeholder="Ваше имя" formControlName="name" id="name">
+          <div *ngIf="signupForm.get('name')?.invalid
+                 && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched)">
+            <label for="name" *ngIf="signupForm.get('name')?.errors?.['required']">Введите имя</label>
+            <label for="name" *ngIf="signupForm.get('name')?.errors?.['pattern']">Не корректное имя</label>
+          </div>
         </div>
         <div class="auth-input">
           <input type="text" class="input"
                  [ngStyle]="{'border-color': signupForm.get('email')?.invalid
                  && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched) ? 'red' : ''}"
-                 placeholder="Электронная почта" formControlName="email">
+                 placeholder="Электронная почта" formControlName="email" id="email">
+          <div *ngIf="signupForm.get('email')?.invalid
+                 && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)">
+            <label for="email" *ngIf="signupForm.get('email')?.errors?.['required']">Введите email</label>
+            <label for="email" *ngIf="signupForm.get('email')?.errors?.['email']">Не корректный email </label>
+          </div>
         </div>
         <div class="auth-input">
           <input type="password" class="input"
                  [ngStyle]="{'border-color': signupForm.get('password')?.invalid
                  && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched) ? 'red' : ''}"
-                 placeholder="Пароль" formControlName="password">
+                 placeholder="Пароль" formControlName="password" id="password">
+          <div *ngIf="signupForm.get('password')?.invalid
+                 && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)">
+            <label for="password" *ngIf="signupForm.get('password')?.errors?.['required']">Введите пароль</label>
+            <label for="password" *ngIf="signupForm.get('password')?.errors?.['pattern']">Пароль должен быть не менее 8
+              символов, содержать как минимум 1 букву в верхнем регистре и как минимум 1 цифру</label>
+          </div>
         </div>
         <div class="auth-checkbox">
           <input type="checkbox" id="agree" formControlName="agree">

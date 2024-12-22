@@ -61,6 +61,7 @@ export class ArticleComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.articleService.getArticle(params['url'])
         .subscribe((data: ArticleType) => {
+          this.article = data;
           this.comments.comments = [];
           this.offset = 3;
 
@@ -70,42 +71,42 @@ export class ArticleComponent implements OnInit {
             this.showMoreComments = false;
           }
 
-          data.comments?.forEach(comment => {
-            this.commentService.getCommentActions(comment.id)
-              .subscribe({
-                next: (data) => {
-                  this.articleActions = data as ActionType[];
+          if (this.isLogged) {
+            data.comments?.forEach(comment => {
+              this.commentService.getCommentActions(comment.id)
+                .subscribe({
+                  next: (data) => {
+                    this.articleActions = data as ActionType[];
 
-                  let foundAction = this.articleActions.find(action => {
-                    return comment.id === action.comment;
-                  });
+                    let foundAction = this.articleActions.find(action => {
+                      return comment.id === action.comment;
+                    });
 
-                  if (foundAction) {
-                    if (foundAction.action === 'like') {
-                      comment.likeApplied = true;
-                    } else if (foundAction.action === 'dislike') {
-                      comment.dislikeApplied = true;
+                    if (foundAction) {
+                      if (foundAction.action === 'like') {
+                        comment.likeApplied = true;
+                      } else if (foundAction.action === 'dislike') {
+                        comment.dislikeApplied = true;
+                      }
+                    } else {
+                      comment.likeApplied = false;
+                      comment.dislikeApplied = false;
                     }
-                  } else {
-                    comment.likeApplied = false;
-                    comment.dislikeApplied = false;
+                  },
+                  error: () => {
+                    this._snackBar.open('Ошибка');
                   }
-                },
-                error: () => {
-                  this._snackBar.open('Ошибка');
-                }
-              });
-          });
-
-          this.article = data;
-
-          this.getCommentsActions();
+                });
+            });
+            this.getCommentsActions();
+            this.article = data;
+          }
         });
     });
   }
 
   getMoreComments(id: string) {
-    if(this.comments.comments.length === 0) {
+    if (this.comments.comments.length === 0) {
       const paramsObj: CommentParamsType = {
         offset: this.offset,
         article: id
@@ -114,19 +115,21 @@ export class ArticleComponent implements OnInit {
         .subscribe(data => {
           if (data.comments) {
             data.comments.forEach(comment => {
-              let foundAction = this.actions.find(action => {
-                return comment.id === action.comment;
-              });
+              if (this.isLogged) {
+                let foundAction = this.actions.find(action => {
+                  return comment.id === action.comment;
+                });
 
-              if (foundAction) {
-                if (foundAction.action === 'like') {
-                  comment.likeApplied = true;
-                } else if (foundAction.action === 'dislike') {
-                  comment.dislikeApplied = true;
+                if (foundAction) {
+                  if (foundAction.action === 'like') {
+                    comment.likeApplied = true;
+                  } else if (foundAction.action === 'dislike') {
+                    comment.dislikeApplied = true;
+                  }
+                } else {
+                  comment.likeApplied = false;
+                  comment.dislikeApplied = false;
                 }
-              } else {
-                comment.likeApplied = false;
-                comment.dislikeApplied = false;
               }
 
               this.comments.comments.push(comment);
@@ -134,7 +137,7 @@ export class ArticleComponent implements OnInit {
 
             this.comments.allCount = data.allCount;
 
-            if(data.comments.length === data.allCount) {
+            if (data.comments.length === data.allCount) {
               this.showMoreComments = false;
             }
           }
@@ -157,19 +160,21 @@ export class ArticleComponent implements OnInit {
       this.commentService.getComments(paramsObj)
         .subscribe(data => {
           data.comments.forEach(comment => {
-            let foundAction = this.actions.find(action => {
-              return comment.id === action.comment;
-            });
+            if(this.isLogged) {
+              let foundAction = this.actions.find(action => {
+                return comment.id === action.comment;
+              });
 
-            if (foundAction) {
-              if (foundAction.action === 'like') {
-                comment.likeApplied = true;
-              } else if (foundAction.action === 'dislike') {
-                comment.dislikeApplied = true;
+              if (foundAction) {
+                if (foundAction.action === 'like') {
+                  comment.likeApplied = true;
+                } else if (foundAction.action === 'dislike') {
+                  comment.dislikeApplied = true;
+                }
+              } else {
+                comment.likeApplied = false;
+                comment.dislikeApplied = false;
               }
-            } else {
-              comment.likeApplied = false;
-              comment.dislikeApplied = false;
             }
 
             this.comments.comments.push(comment);
@@ -195,7 +200,7 @@ export class ArticleComponent implements OnInit {
         next: (data) => {
           this.articleActions = data as ActionType[];
         },
-          error: () => {
+        error: () => {
           this._snackBar.open('Ошибка');
         }
       });

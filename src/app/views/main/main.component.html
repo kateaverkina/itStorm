@@ -293,11 +293,20 @@
         <input type="text" class="input"
                [ngStyle]="{'border-color': requestForm.get('name')?.invalid
                  && (requestForm.get('name')?.dirty || requestForm.get('name')?.touched) ? 'red' : ''}"
-               placeholder="Ваше имя" formControlName="name">
+               placeholder="Ваше имя" formControlName="name" id="name">
+        <div *ngIf="requestForm.get('name')?.invalid
+                 && (requestForm.get('name')?.dirty || requestForm.get('name')?.touched)">
+          <label for="name" *ngIf="requestForm.get('name')?.errors?.['required']">Введите имя</label>
+          <label for="name" *ngIf="requestForm.get('name')?.errors?.['pattern']">Не корректное имя</label>
+        </div>
         <input type="text" class="input"
                [ngStyle]="{'border-color': requestForm.get('phone')?.invalid
                  && (requestForm.get('phone')?.dirty || requestForm.get('phone')?.touched) ? 'red' : ''}"
-               placeholder="Ваш номер телефона" formControlName="phone">
+               placeholder="Ваш номер телефона" formControlName="phone" id="phone">
+        <div *ngIf="requestForm.get('phone')?.invalid
+                 && (requestForm.get('phone')?.dirty || requestForm.get('phone')?.touched)">
+          <label for="phone" *ngIf="requestForm.get('phone')?.errors?.['required']">Введите телефон</label>
+        </div>
         <button class="btn" (click)="sendRequest()">Оставить заявку</button>
       </div>
     </div>

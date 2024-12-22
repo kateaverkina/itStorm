@@ -34,16 +34,18 @@ export class HeaderComponent implements OnInit {
       this.isLogged = isLoggedIn;
     });
 
-    this.userService.getUserInfo()
-      .subscribe((data: UserInfoType | DefaultResponseType) => {
-        if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message);
-        }
+    if(this.isLogged) {
+      this.userService.getUserInfo()
+        .subscribe((data: UserInfoType | DefaultResponseType) => {
+          if ((data as DefaultResponseType).error !== undefined) {
+            throw new Error((data as DefaultResponseType).message);
+          }
 
-        const userInfo = data as UserInfoType;
+          const userInfo = data as UserInfoType;
 
-        this.name = userInfo.name;
-      });
+          this.name = userInfo.name;
+        });
+    }
   }
 
   logout(): void {

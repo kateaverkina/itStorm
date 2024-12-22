@@ -15,7 +15,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class FooterComponent {
   requestForm = this.fb.group({
-    name: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.pattern(/[А-ЯЁ]+(\s+[А-ЯЁ]+)?/)]],
     phone: ['', [Validators.required]],
   });
 

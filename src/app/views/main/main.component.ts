@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
     articles: ArticleType[] = [];
 
     requestForm = this.fb.group({
-        name: ['', [Validators.required]],
+        name: ['', [Validators.required, Validators.pattern(/[А-ЯЁ]+(\s+[А-ЯЁ]+)?/)]],
         phone: ['', [Validators.required]],
         service: ['', [Validators.required]]
     });

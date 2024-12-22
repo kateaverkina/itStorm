@@ -9,9 +9,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrl: './comment.component.scss'
 })
 export class CommentComponent implements OnInit {
-  likeApplied: boolean = false;
-  dislikeApplied: boolean = false;
-  violateApplied: boolean = false;
 
   @Input() comment!: CommentType;
   constructor(private commentService: CommentService,
@@ -19,12 +16,7 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.comment.likeApplied === true) {
-      this.likeApplied = true;
-    }
-    if (this.comment.dislikeApplied === true) {
-      this.dislikeApplied = true;
-    }
+
   }
 
   applyAction(id: string, action: string) {
@@ -33,7 +25,6 @@ export class CommentComponent implements OnInit {
         this.commentService.applyAction(id, action)
           .subscribe({
             next: () => {
-              this.likeApplied = false;
               this.comment.likeApplied = false;
               this.comment.likesCount--;
             },
@@ -45,8 +36,6 @@ export class CommentComponent implements OnInit {
         this.commentService.applyAction(id, action)
           .subscribe({
             next: () => {
-              this.dislikeApplied = false;
-              this.likeApplied = true;
               this.comment.likeApplied = true;
               this.comment.dislikeApplied = false;
               this.comment.likesCount++;
@@ -61,7 +50,6 @@ export class CommentComponent implements OnInit {
         this.commentService.applyAction(id, action)
           .subscribe({
             next: () => {
-              this.likeApplied = true;
               this.comment.likeApplied = true;
               this.comment.likesCount++;
             },
@@ -77,7 +65,6 @@ export class CommentComponent implements OnInit {
         this.commentService.applyAction(id, action)
           .subscribe({
             next: () => {
-              this.dislikeApplied = false;
               this.comment.dislikeApplied = false;
               this.comment.dislikesCount--;
             },
@@ -89,8 +76,6 @@ export class CommentComponent implements OnInit {
         this.commentService.applyAction(id, action)
           .subscribe({
             next: () => {
-              this.likeApplied = false;
-              this.dislikeApplied = true;
               this.comment.dislikeApplied = true;
               this.comment.likeApplied = false;
               this.comment.likesCount--;
@@ -105,7 +90,6 @@ export class CommentComponent implements OnInit {
         this.commentService.applyAction(id, action)
           .subscribe({
             next: () => {
-              this.dislikeApplied = true;
               this.comment.dislikeApplied = true;
               this.comment.dislikesCount++;
             },
@@ -117,7 +101,6 @@ export class CommentComponent implements OnInit {
     }
 
     if (action === 'violate') {
-      this.violateApplied = true;
       this.commentService.applyAction(id, action)
         .subscribe({
           next: () => {
