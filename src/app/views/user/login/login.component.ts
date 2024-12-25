@@ -50,7 +50,8 @@ export class LoginComponent {
             this.authService.userId = loginResponse.userId;
 
             this._snackBar.open('Вы успешно авторизовались');
-            this.router.navigate(['/']);
+            //this.router.navigate(['/']);
+            location.reload();
           },
           error: (errorResponse: HttpErrorResponse) => {
             if(errorResponse.error && errorResponse.error.message) {
