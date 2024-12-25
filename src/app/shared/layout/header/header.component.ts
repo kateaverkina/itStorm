@@ -13,7 +13,7 @@ import {DefaultResponseType} from "../../../../types/default-response.type";
 })
 export class HeaderComponent implements OnInit {
   isLogged: boolean = false;
-  name: string | null = null;
+  name: string = '';
 
   public linkActiveOptions: IsActiveMatchOptions = {
     matrixParams: 'exact',
@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.scrollToSectionHook();
 
     this.authService.isLogged$.subscribe((isLoggedIn: boolean) => {
@@ -46,6 +47,10 @@ export class HeaderComponent implements OnInit {
           const userInfo = data as UserInfoType;
           this.name = userInfo.name;
         });
+
+      this.userService.name$.subscribe(name => {
+        this.name = name;
+      })
     }
   }
 
@@ -80,7 +85,7 @@ export class HeaderComponent implements OnInit {
   doLogout(): void {
     this.authService.removeTokens();
     this.authService.userId = null;
-    this.name = null;
+    this.name = '';
     this._snackBar.open('Вы вышли из системы');
     this.router.navigate(['/']);
   }

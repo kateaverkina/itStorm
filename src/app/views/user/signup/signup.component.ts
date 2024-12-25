@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {LoginResponseType} from "../../../../types/login-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
+import {UserInfoType} from "../../../../types/user-info.type";
+import {UserService} from "../../../shared/services/user.service";
 
 @Component({
   selector: 'app-signup',
@@ -24,6 +26,7 @@ export class SignupComponent {
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private _snackBar: MatSnackBar,
+              private userService: UserService,
               private router: Router) {
   }
 
@@ -53,8 +56,18 @@ export class SignupComponent {
             this.authService.userId = loginResponse.userId;
 
             this._snackBar.open('Вы успешно зарегистрировались');
-            //this.router.navigate(['/']);
-            location.reload();
+            this.router.navigate(['/']);
+
+            this.userService.getUserInfo()
+              .subscribe((data: UserInfoType | DefaultResponseType) => {
+                if ((data as DefaultResponseType).error !== undefined) {
+                  throw new Error((data as DefaultResponseType).message);
+                }
+
+                const userInfo = data as UserInfoType;
+                this.userService.name = userInfo.name;
+                this.userService.name$.next(userInfo.name);
+              });
           },
           error: (errorResponse: HttpErrorResponse) => {
             if(errorResponse.error && errorResponse.error.message) {
