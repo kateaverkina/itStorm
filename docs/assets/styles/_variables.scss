@@ -1,0 +1,14 @@
+$container-width: 1240px;
+
+$main-text-color: #071739;
+
+$blue-text-color: #709FDC;
+
+@mixin lora-title-38 {
+  font-family: Lora, sans-serif;
+  font-size: 38px;
+  font-weight: 400;
+  color: $blue-text-color;
+}
+
+
