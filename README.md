@@ -1,7 +1,8 @@
-Проект: "IT-Storm" - сайт с IT услугами, полезными статьями и комментариями к ним.
+Проект: «Lumincon Finance» - система учета доходов и расходов
 
-Angular, TypeScript, SCSS
-Frontend на Angular, backend Айтилогия.
-В основе проекта Angular App.
+JavaScript, SCSS, Bootstrap
+Frontend на чистом JavaScript (SPA), backend Айтилогия.
+В основе проекта Single Page Application на чистом JavaScript
+
 
 
